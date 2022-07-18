@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+  <title></title>
+  <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+  <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+ <style>
+  .button {
+  background-color: #4CAF55; 
+  border: none;
+  color: white;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 9px;
+}
+</style>
+</head>
+  
+<body>
+
+  <py-env>
+    -  pytube 
+  </py-env>
+
+  
+  <br />
+
+ <input type="text" placeholder="Type " id="inputId">
+  <button class="button" type="button" id="button">Click Me</button>
+
+  <br />
+
+
+  <py-script>
+from js import document
+from pyodide import create_proxy
+
+
+def button_click(event):
+ import pytube 	
+ link= document.getElementById("inputId").value;  
+ console.log( link)
+ yt = pytube.YouTube(link)
+ yt.streams.first().download()
+
+  
+
+def callback():
+	
+	click_proxy = create_proxy(button_click)
+
+	e = document.getElementById("button")
+	e.addEventListener("click", click_proxy)
+
+callback()
+
+  </py-script>
+</body>
+</html>
